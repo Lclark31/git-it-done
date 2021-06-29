@@ -46,7 +46,8 @@ let displayRepos = function (repos, searchTerm) {
   for (let i = 0; i < repos.length; i++) {
     let repoName = `${repos[i].owner.login}/${repos[i].name}`;
 
-    let repoEl = document.createElement(`div`);
+    let repoEl = document.createElement(`a`);
+    repoEl.setAttribute(`href`, `./single-repo.html?repo=${repoName}`);
     repoEl.classList = `list-item flex-row justify-space-betweeen align-center`;
 
     let titleEl = document.createElement(`span`);
