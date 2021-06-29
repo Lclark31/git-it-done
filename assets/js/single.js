@@ -1,4 +1,5 @@
 let issuesContainerEl = document.querySelector(`#issues-container`);
+let limitWarningEl = document.querySelector(`#limit-warning`);
 
 let getRepoIssues = function (repo) {
   var apiUrl = `https://api.github.com/repos/${repo}/issues?direction=asc`;
@@ -10,6 +11,9 @@ let getRepoIssues = function (repo) {
       });
     } else {
       alert(`There was a problem with your request!`);
+    }
+    if (response.headers.get(`Link`)) {
+      displayWarning(repo);
     }
   });
 };
@@ -43,4 +47,15 @@ let displayIssues = function (issues) {
   }
 };
 
-getRepoIssues(`lclark31/run-buddy`);
+let displayWarning = function (repo) {
+  limitWarningEl.textContent = `To see more than 30 issues, visit `;
+
+  let linkEl = document.createElement(`a`);
+  linkEl.textContent = `See More Issues on GitHub.com`;
+  linkEl.setAttribute(`href`, `https://github.com/${repo}/issues`);
+  linkEl.setAttribute(`target`, `_blank`);
+
+  limitWarningEl.appendChild(linkEl);
+};
+
+getRepoIssues(`facebook/react`);
